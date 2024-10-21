@@ -5,15 +5,19 @@ const fs = require('fs');
 const cors = require('cors'); // Importar el paquete cors
 const privateKey = fs.readFileSync('private.key');
 const certificate = fs.readFileSync('certificate.crt');
-
-const app = express();
+const {jsonParseErrorHandler} = require('./server/middleware/errorHandler'); // Importar el manejador de errores
 const PORT_BACKEND = 5000;
-const PORT_FRONTEND = 3000;
+
+// Configuracion de errores globales
+const app = express();
+// app.use(express.json)
+// app.use(jsonParseErrorHandler)
+
 
 // Cargar el certificado y la clave
 const options = {
     key: privateKey, // Ruta a tu clave privada
-    cert:  certificate// Ruta a tu certificado
+    cert:  certificate // Ruta a tu certificado
 };
 
 // Middleware para habilitar CORS para el puerto 3000
