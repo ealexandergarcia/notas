@@ -1,0 +1,172 @@
+[{
+  "_id": {
+    "$oid": "67178c80eb8117f4a2f394d9"
+  },
+  "name": "Paco"
+},
+{
+  "_id": {
+    "$oid": "67178d06cacda6129aa1879c"
+  },
+  "name": "Paco"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2d5"
+  },
+  "name": "Paco",
+  "email": "paco@example.com",
+  "age": 30,
+  "address": {
+    "street": "Calle Ficticia 123",
+    "city": "Ciudad Ficticia",
+    "postalCode": "12345"
+  },
+  "phone": "+34 600 000 000",
+  "isActive": true,
+  "createdAt": "2023-01-01T10:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2d6"
+  },
+  "name": "Laura",
+  "email": "laura@example.com",
+  "age": 28,
+  "address": {
+    "street": "Calle Sol 56",
+    "city": "Madrid",
+    "postalCode": "28001"
+  },
+  "phone": "+34 600 111 222",
+  "isActive": true,
+  "createdAt": "2023-02-10T12:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2d7"
+  },
+  "name": "Juan",
+  "email": "juan@example.com",
+  "age": 35,
+  "address": {
+    "street": "Calle Luna 89",
+    "city": "Barcelona",
+    "postalCode": "08015"
+  },
+  "phone": "+34 600 333 444",
+  "isActive": false,
+  "createdAt": "2022-11-05T08:30:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2d8"
+  },
+  "name": "Ana",
+  "email": "ana@example.com",
+  "age": 24,
+  "address": {
+    "street": "Calle Mar 1",
+    "city": "Sevilla",
+    "postalCode": "41001"
+  },
+  "phone": "+34 600 555 666",
+  "isActive": true,
+  "createdAt": "2023-05-21T15:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2d9"
+  },
+  "name": "Carlos",
+  "email": "carlos@example.com",
+  "age": 40,
+  "address": {
+    "street": "Calle Norte 77",
+    "city": "Valencia",
+    "postalCode": "46001"
+  },
+  "phone": "+34 600 777 888",
+  "isActive": true,
+  "createdAt": "2023-03-15T11:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2da"
+  },
+  "name": "Beatriz",
+  "email": "beatriz@example.com",
+  "age": 22,
+  "address": {
+    "street": "Calle Primavera 3",
+    "city": "Bilbao",
+    "postalCode": "48001"
+  },
+  "phone": "+34 600 999 000",
+  "isActive": false,
+  "createdAt": "2021-07-30T09:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2db"
+  },
+  "name": "Miguel",
+  "email": "miguel@example.com",
+  "age": 33,
+  "address": {
+    "street": "Calle Oeste 18",
+    "city": "Zaragoza",
+    "postalCode": "50001"
+  },
+  "phone": "+34 600 888 777",
+  "isActive": true,
+  "createdAt": "2023-09-18T14:30:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2dc"
+  },
+  "name": "Sofía",
+  "email": "sofia@example.com",
+  "age": 27,
+  "address": {
+    "street": "Calle Estrella 99",
+    "city": "Granada",
+    "postalCode": "18001"
+  },
+  "phone": "+34 600 444 555",
+  "isActive": true,
+  "createdAt": "2023-06-22T12:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2dd"
+  },
+  "name": "David",
+  "email": "david@example.com",
+  "age": 45,
+  "address": {
+    "street": "Calle Río 8",
+    "city": "Murcia",
+    "postalCode": "30001"
+  },
+  "phone": "+34 600 333 222",
+  "isActive": true,
+  "createdAt": "2023-10-05T16:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "6717ab75a2655b554a28d2de"
+  },
+  "name": "Isabel",
+  "email": "isabel@example.com",
+  "age": 29,
+  "address": {
+    "street": "Calle Jardín 2",
+    "city": "Salamanca",
+    "postalCode": "37001"
+  },
+  "phone": "+34 600 222 111",
+  "isActive": true,
+  "createdAt": "2023-04-12T11:00:00Z"
+}]

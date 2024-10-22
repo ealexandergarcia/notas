@@ -1,0 +1,221 @@
+[{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494526"
+  },
+  "description": "Exploring cloud-based architectures for scalable applications.",
+  "title": "Cloud Architecture Overview",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d1"
+  },
+  "changes": [
+    {
+      "title": "Cloud Architecture Basics",
+      "description": "Introduction to cloud infrastructure.",
+      "date": {
+        "$date": "2024-01-10T10:15:00.000Z"
+      }
+    }
+  ],
+  "status": "visible"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494527"
+  },
+  "description": "An overview of the most common design patterns in software development.",
+  "title": "Software Design Patterns",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d2"
+  },
+  "changes": [
+    {
+      "title": "Popular Design Patterns",
+      "description": "Updated with more patterns and examples.",
+      "date": {
+        "$date": "2024-03-05T14:30:00.000Z"
+      }
+    }
+  ],
+  "status": "hidden"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494528"
+  },
+  "description": "Best practices for creating RESTful APIs.",
+  "title": "REST API Development",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d3"
+  },
+  "changes": [
+    {
+      "title": "API Development",
+      "description": "Added JWT authentication section.",
+      "date": {
+        "$date": "2024-05-20T09:45:00.000Z"
+      }
+    }
+  ],
+  "status": "visible"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494529"
+  },
+  "description": "Tips and tools for improving code quality.",
+  "title": "Code Quality Improvement",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d4"
+  },
+  "changes": [
+    {
+      "title": "Improving Code Quality",
+      "description": "Expanded section on automated testing.",
+      "date": {
+        "$date": "2024-07-15T16:00:00.000Z"
+      }
+    }
+  ],
+  "status": "visible"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494530"
+  },
+  "description": "A guide to setting up and managing Docker containers.",
+  "title": "Docker Basics",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d5"
+  },
+  "changes": [
+    {
+      "title": "Container Management",
+      "description": "Added instructions for multi-stage builds.",
+      "date": {
+        "$date": "2024-02-12T11:20:00.000Z"
+      }
+    }
+  ],
+  "status": "hidden"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494531"
+  },
+  "description": "Understanding data structures and algorithms for efficient programming.",
+  "title": "Data Structures and Algorithms",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d6"
+  },
+  "changes": [
+    {
+      "title": "Algorithms Guide",
+      "description": "Added more examples on time complexity.",
+      "date": {
+        "$date": "2024-04-22T13:50:00.000Z"
+      }
+    }
+  ],
+  "status": "visible"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494532"
+  },
+  "description": "Security measures and best practices for secure application development.",
+  "title": "Application Security Essentials",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d7"
+  },
+  "changes": [
+    {
+      "title": "Security Practices",
+      "description": "Updated section on OWASP Top 10 vulnerabilities.",
+      "date": {
+        "$date": "2024-06-18T17:25:00.000Z"
+      }
+    }
+  ],
+  "status": "visible"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494533"
+  },
+  "description": "In-depth explanation of microservices architecture.",
+  "title": "Microservices Architecture",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d8"
+  },
+  "changes": [
+    {
+      "title": "Understanding Microservices",
+      "description": "Added section on service discovery.",
+      "date": {
+        "$date": "2024-08-05T08:10:00.000Z"
+      }
+    }
+  ],
+  "status": "hidden"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494534"
+  },
+  "description": "Guide to integrating third-party APIs into your applications.",
+  "title": "API Integration",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d9"
+  },
+  "changes": [
+    {
+      "title": "Third-Party API Integration",
+      "description": "Added a case study for Stripe integration.",
+      "date": {
+        "$date": "2024-03-30T12:35:00.000Z"
+      }
+    }
+  ],
+  "status": "visible"
+},
+{
+  "_id": {
+    "$oid": "6716c25d62f9cc85af494535"
+  },
+  "description": "A comprehensive guide to testing React applications.",
+  "title": "Testing in React",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394da"
+  },
+  "changes": [
+    {
+      "title": "React Testing",
+      "description": "Expanded with examples using React Testing Library.",
+      "date": {
+        "$date": "2024-01-25T19:05:00.000Z"
+      }
+    }
+  ],
+  "status": "visible"
+},
+{
+  "_id": {
+    "$oid": "6717ac5dd03cf6dbb5a8e635"
+  },
+  "title": "SOLID principles",
+  "description": "Looking for analogys to aunderstand thi shit.",
+  "user_id": {
+    "$oid": "67178c80eb8117f4a2f394d1"
+  },
+  "changes": [
+    {
+      "title": "SOLID principles",
+      "description": "Looking for analogys to aunderstand thi shit.",
+      "date": {
+        "$date": "2024-10-22T13:45:01.979Z"
+      }
+    }
+  ],
+  "status": "visible",
+  "__v": 0
+}]
