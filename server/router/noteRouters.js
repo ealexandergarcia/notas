@@ -1,8 +1,8 @@
 const { versionMiddleware } = require('../middleware/versionMiddleware'); // Importa el middleware
 const router = require("express").Router();
 const {
-  obtenerNotas,
-  obtenerNotaPorId,
+  getNotes,
+  getNoteByNoteId,
   buscarNotas,
   obtenerHistorial,
   crearNota,
@@ -11,9 +11,9 @@ const {
   eliminarNota
 } = require('../controllers/noteController');
 
-/*
+/** 
  * --------------------------------------------------------
- *                    Version 1.0.0
+ * * Version 1.0.0
  * --------------------------------------------------------
  */
 
@@ -31,7 +31,7 @@ router.get("/search", versionMiddleware('1.0.0'), buscarNotas);
  * @header x-version: "1.0.0"
  * @returns {Object} Lista de notas.
  */
-router.get("/", versionMiddleware('1.0.0'), obtenerNotas);
+router.get("/:user_id", versionMiddleware('1.0.0'), getNotes); // Updated route
 
 /**
  * @route GET /api/notes/:id
@@ -40,7 +40,7 @@ router.get("/", versionMiddleware('1.0.0'), obtenerNotas);
  * @param {String} id - ID de la nota.
  * @returns {Object} Nota encontrada.
  */
-router.get("/:id", versionMiddleware('1.0.0'), obtenerNotaPorId);
+router.get("/:userId/:noteId", versionMiddleware('1.0.0'), getNoteByNoteId);
 
 /**
  * @route GET /api/notes/:id/history

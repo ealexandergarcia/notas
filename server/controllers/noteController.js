@@ -2,54 +2,69 @@ const mongoose = require('mongoose');
 const Note = require('../models/noteModule'); // Asegúrate de que la ruta es correcta
 
 // Obtener todas las notas con paginación opcional
-exports.obtenerNotas = async (req, res)=> {
-  const { page = 1, limit = 10 } = req.query;  // Paginación por query params
-  console.log('Recibiendo solicitud GET para /api/notes'); // Agregar log
+exports.getNotes = async (req, res) => {
+  const { page = 1, limit = 10 } = req.query; // Pagination parameters
+  const { user_id } = req.params; // Get user_id from route params
+  console.log('Received GET request for /api/notes'); // Add log
+
   try {
-    const notes = await Note.find()
-      .skip((page - 1) * limit)  // Saltar los primeros (page-1)*limit
-      .limit(parseInt(limit));  // Limitar la cantidad de resultados
+    // Filter notes by user_id and status "visible"
+    const notes = await Note.find({
+      user_id,
+      status: "visible"
+    })
+      .skip((page - 1) * limit)  // Skip the first (page-1)*limit
+      .limit(parseInt(limit))     // Limit the number of results
+      .select('-changes');        // Exclude the changes field
+
     console.log(notes);
 
     if (!notes || notes.length === 0) {
-      return res.status(404).json({ message: 'No se encontraron notas' });
+      return res.status(404).json({ status:404,message: 'No notes found' });
     }
 
     res.status(200).json({
-      message: 'Notas obtenidas exitosamente',
-      notes,
-      page,
-      limit
+      status: 200,
+      message: 'Notes retrieved successfully',
+      notes
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al obtener las notas' });
+    res.status(500).json({ status:500 ,message: 'Error retrieving notes' });
   }
 }
 
 // Obtener una nota por ID
-exports.obtenerNotaPorId = async(req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: 'ID de nota no válido' });
+exports.getNoteByNoteId = async (req, res) => {
+  const { userId, noteId } = req.params; // Get user ID and note ID from route parameters
+
+  if (!mongoose.Types.ObjectId.isValid(noteId) || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ status:400, message: 'Invalid note ID or user ID' });
   }
 
   try {
-    const note = await Note.findById(id); // Sin populate
+    const note = await Note.findOne({
+      _id: noteId,
+      user_id: userId,
+      status: 'visible' // Ensure the note is visible
+    }).select('-changes');
 
     if (!note) {
-      return res.status(404).json({ message: 'Nota no encontrada' });
+      return res.status(404).json({ message: 'Note not found or not visible' });
     }
 
+    // Return the found note without changes
     res.status(200).json({
-      message: 'Nota encontrada',
+      status: 200,
+      message: 'Notes retrieved successfully',
       note
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al obtener la nota' });
+    res.status(500).json({ status:500 ,message: 'Error retrieving notes' });
   }
 }
+
 
 // Buscar notas por título o descripción
 exports.buscarNotas = async (req, res) => {
