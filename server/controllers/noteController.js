@@ -229,23 +229,37 @@ exports.actualizarNota = async (req, res) => {
 exports.eliminarNota = async (req, res) => {
   const { id } = req.params;
 
+  // Validate the provided ID
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: 'ID de nota no válido' });
+    return res.status(400).json({ status:400,message: 'Invalid note ID' });
   }
 
   try {
-    const deletedNote = await Note.findByIdAndDelete(id); // Sin populate
+    // Find the note by ID
+    const note = await Note.findById(id);
 
-    if (!deletedNote) {
-      return res.status(404).json({ message: 'Nota no encontrada' });
+    // Check if the note exists
+    if (!note) {
+      return res.status(404).json({ status:400,message: 'Note not found' });
     }
 
+    // Check if the note is already hidden
+    if (note.status === 'hidden') {
+      return res.status(400).json({ status:400,message: 'Note is already hidden' });
+    }
+
+    // Change the status to hidden
+    note.status = 'hidden';
+    await note.save(); // Save the updated note
+
     res.status(200).json({
-      message: 'Nota eliminada exitosamente',
-      note: deletedNote
+      status:200,
+      message: 'Note successfully hidden',
+      note
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al eliminar la nota' });
+    res.status(500).json({ status:500,message: 'Error hiding the note' });
   }
 }
+

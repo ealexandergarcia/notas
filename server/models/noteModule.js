@@ -38,8 +38,8 @@ const noteSchema = new Schema(
     changes: [changeSchema],
     status: {
       type: String,
-      enum: ["not visible", "visible"],
-      default: "not visible",
+      enum: ["hidden", "visible"],
+      default: "hidden",
     },
   },
   { collection: "note" }
