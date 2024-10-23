@@ -72,7 +72,7 @@ exports.searchNotes = async (req, res) => {
 
   // Check if the query is defined
   if (!query) {
-    return res.status(400).json({ message: 'You must provide a search criterion' });
+    return res.status(400).json({ status: 400,message: 'You must provide a search criterion' });
   }
 
   try {
@@ -83,7 +83,7 @@ exports.searchNotes = async (req, res) => {
 
     // Check if any notes were found
     if (!notes || notes.length === 0) {
-      return res.status(404).json({ message: 'No notes found with that search criterion' });
+      return res.status(404).json({ status: 404,message: 'No notes found with that search criterion' });
     }
 
     res.status(200).json({
@@ -92,7 +92,7 @@ exports.searchNotes = async (req, res) => {
     });
   } catch (error) {
     console.error('Error while searching for notes:', error);  // Add more context to the error
-    res.status(500).json({ message: 'Error while searching for notes', error: error.message });
+    res.status(500).json({ status: 500,message: 'Error while searching for notes', error: error.message });
   }
 };
 
