@@ -42,7 +42,7 @@ const noteSchema = new Schema(
       default: "hidden",
     },
   },
-  { collection: "note" }
+  {  versionKey: false,collection: "note" }
 );
 
 const Note = mongoose.model("note", noteSchema);
