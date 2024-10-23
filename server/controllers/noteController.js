@@ -67,37 +67,34 @@ exports.getNoteByNoteId = async (req, res) => {
 
 
 // Buscar notas por título o descripción
-exports.buscarNotas = async (req, res) => {
+exports.searchNotes = async (req, res) => {
   const { query } = req.query;
 
-  // Verificar que el query esté definido
+  // Check if the query is defined
   if (!query) {
-    return res.status(400).json({ message: 'Debe proporcionar un criterio de búsqueda' });
+    return res.status(400).json({ message: 'You must provide a search criterion' });
   }
 
   try {
-    // Realizar la búsqueda usando $or
     const notes = await Note.find({
-      $or: [
-        { title: { $regex: query, $options: 'i' } },
-        { description: { $regex: query, $options: 'i' } }
-      ]
-    });
+      $text: { $search: query },
+      status: 'visible'
+    }).select('-changes');
 
-    // Verificar si se encontraron notas
+    // Check if any notes were found
     if (!notes || notes.length === 0) {
-      return res.status(404).json({ message: 'No se encontraron notas con ese criterio de búsqueda' });
+      return res.status(404).json({ message: 'No notes found with that search criterion' });
     }
 
     res.status(200).json({
-      message: 'Notas encontradas',
+      message: 'Notes found',
       notes
     });
   } catch (error) {
-    console.error('Error al buscar notas:', error);  // Añadir más contexto al error
-    res.status(500).json({ message: 'Error al buscar las notas', error: error.message });
+    console.error('Error while searching for notes:', error);  // Add more context to the error
+    res.status(500).json({ message: 'Error while searching for notes', error: error.message });
   }
-}
+};
 
 
 // Obtener historial de cambios de una nota

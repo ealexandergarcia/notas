@@ -3,7 +3,7 @@ const router = require("express").Router();
 const {
   getNotes,
   getNoteByNoteId,
-  buscarNotas,
+  searchNotes,
   obtenerHistorial,
   crearNota,
   crearCambio,
@@ -23,7 +23,7 @@ const {
  * @header x-version: "1.0.0"
  * @returns {Object} Notas encontradas.
  */
-router.get("/search", versionMiddleware('1.0.0'), buscarNotas);
+router.get("/search", versionMiddleware('1.0.0'), searchNotes);
 
 /**
  * @route GET /api/notes
