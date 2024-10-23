@@ -17,7 +17,7 @@ const changeSchema = new Schema(
       default: Date.now,
     },
   },
-  { _id: false, timestamps: true, collection: "note" }
+  { _id: false, collection: "note" }
 );
 
 const noteSchema = new Schema(
@@ -42,7 +42,7 @@ const noteSchema = new Schema(
       default: "not visible",
     },
   },
-  { timestamps: true, collection: "note" }
+  { collection: "note" }
 );
 
 const Note = mongoose.model("note", noteSchema);

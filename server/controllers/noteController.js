@@ -54,12 +54,14 @@ exports.obtenerNotaPorId = async(req, res) => {
 // Buscar notas por título o descripción
 exports.buscarNotas = async (req, res) => {
   const { query } = req.query;
-  
+
+  // Verificar que el query esté definido
   if (!query) {
     return res.status(400).json({ message: 'Debe proporcionar un criterio de búsqueda' });
   }
 
   try {
+    // Realizar la búsqueda usando $or
     const notes = await Note.find({
       $or: [
         { title: { $regex: query, $options: 'i' } },
@@ -67,7 +69,8 @@ exports.buscarNotas = async (req, res) => {
       ]
     });
 
-    if (notes.length === 0) {
+    // Verificar si se encontraron notas
+    if (!notes || notes.length === 0) {
       return res.status(404).json({ message: 'No se encontraron notas con ese criterio de búsqueda' });
     }
 
@@ -76,10 +79,11 @@ exports.buscarNotas = async (req, res) => {
       notes
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al buscar las notas' });
+    console.error('Error al buscar notas:', error);  // Añadir más contexto al error
+    res.status(500).json({ message: 'Error al buscar las notas', error: error.message });
   }
 }
+
 
 // Obtener historial de cambios de una nota
 exports.obtenerHistorial = async (req, res) => {
