@@ -10,6 +10,7 @@ const { jsonParseErrorHandler } = require('./server/middleware/errorHandler'); /
 
 // Importar las rutas de notas
 const noteRoutes = require('./server/router/noteRouters');
+const userRoutes = require('./server/router/userRouters');
 
 const PORT_BACKEND = 5000;
 
@@ -38,6 +39,7 @@ app.get('/', (req, res) => {
 
 // Agregar las rutas de notas
 app.use('/api/notes', noteRoutes);
+app.use('/api/users', userRoutes);
 
 // Configuración de manejo de errores globales
 app.use(jsonParseErrorHandler);
