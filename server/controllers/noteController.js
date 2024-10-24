@@ -9,14 +9,14 @@ class NoteController {
      * @param {Object} res - La respuesta HTTP.
      */
     static async getNotes(req, res) {
+      const userId = req.auth.userId;
         const { page = 1, limit = 10 } = req.query; // Pagination parameters
-        const { user_id } = req.params; // Get user_id from route params
         console.log('Received GET request for /api/notes'); // Add log
 
         try {
             // Filter notes by user_id and status "visible"
             const notes = await Note.find({
-                user_id,
+                user_id:userId,
                 status: "visible"
             })
                 .skip((page - 1) * limit)  // Skip the first (page-1)*limit
@@ -47,10 +47,12 @@ class NoteController {
      * @param {Object} res - La respuesta HTTP.
      */
     static async getNoteByNoteId(req, res) {
-        const { userId, noteId } = req.params; // Get user ID and note ID from route parameters
+      const userId = req.auth.userId;
+      console.log(userId);
+        const { noteId } = req.params; // Get user ID and note ID from route parameters
 
-        if (!mongoose.Types.ObjectId.isValid(noteId) || !mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ status: 400, message: 'Invalid note ID or user ID' });
+        if (!mongoose.Types.ObjectId.isValid(noteId)) {
+            return res.status(400).json({ status: 400, message: 'Invalid note ID' });
         }
 
         try {
@@ -83,7 +85,8 @@ class NoteController {
      */
     static async searchNotes(req, res) {
         const { query } = req.query;
-
+        const userId = req.auth.userId;
+        console.log(userId);
         // Check if the query is defined
         if (!query) {
             return res.status(400).json({ status: 400, message: 'You must provide a search criterion' });
@@ -92,7 +95,8 @@ class NoteController {
         try {
             const notes = await Note.find({
                 $text: { $search: query },
-                status: 'visible'
+                status: 'visible',
+                user_id: userId,
             }).select('-changes');
 
             // Check if any notes were found
@@ -147,12 +151,13 @@ class NoteController {
      */
     static async crearNota(req, res) {
         try {
-            const { title, description, user_id, status } = req.body;
+            const { title, description, status } = req.body;
+            const userId = req.auth.userId;
 
             const newNote = new Note({
                 title,
                 description,
-                user_id,
+                user_id:userId,
                 status
             });
 

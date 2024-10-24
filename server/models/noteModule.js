@@ -39,7 +39,7 @@ const noteSchema = new Schema(
     status: {
       type: String,
       enum: ["hidden", "visible"],
-      default: "hidden",
+      default: "visible",
     },
   },
   {  versionKey: false,collection: "note" }

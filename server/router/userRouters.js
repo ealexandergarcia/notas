@@ -1,5 +1,5 @@
-const { versionMiddleware } = require('../middleware/versionMiddleware'); // Import the middleware
-const authJwt = require('../middleware/authJwt'); // Import the auth middleware
+const { versionMiddleware } = require('../middleware/versionMiddleware'); 
+const { authJwt, handleAuthErrors } = require('../middleware/authJwt'); 
 const router = require("express").Router();
 const UserController = require('../controllers/userController');
 

@@ -1,4 +1,5 @@
 const { versionMiddleware } = require('../middleware/versionMiddleware'); // Importa el middleware
+const { authJwt, handleAuthErrors } = require('../middleware/authJwt'); 
 const router = require("express").Router();
 const {
   getNotes,
@@ -23,7 +24,7 @@ const {
  * @header x-version: "1.0.0"
  * @returns {Object} Notas encontradas.
  */
-router.get("/search", versionMiddleware('1.0.0'), searchNotes);
+router.get("/search",authJwt, versionMiddleware('1.0.0'), searchNotes);
 
 /**
  * @route GET /api/notes
@@ -31,7 +32,7 @@ router.get("/search", versionMiddleware('1.0.0'), searchNotes);
  * @header x-version: "1.0.0"
  * @returns {Object} Lista de notas.
  */
-router.get("/:user_id", versionMiddleware('1.0.0'), getNotes); // Updated route
+router.get("/", authJwt,versionMiddleware('1.0.0'), getNotes); // Updated route
 
 /**
  * @route GET /api/notes/:id
@@ -40,7 +41,7 @@ router.get("/:user_id", versionMiddleware('1.0.0'), getNotes); // Updated route
  * @param {String} id - ID de la nota.
  * @returns {Object} Nota encontrada.
  */
-router.get("/:userId/:noteId", versionMiddleware('1.0.0'), getNoteByNoteId);
+router.get("/:noteId",authJwt, versionMiddleware('1.0.0'), getNoteByNoteId);
 
 /**
  * @route GET /api/notes/:id/history
@@ -49,7 +50,7 @@ router.get("/:userId/:noteId", versionMiddleware('1.0.0'), getNoteByNoteId);
  * @param {String} id - ID de la nota.
  * @returns {Object} Historial de la nota.
  */
-router.get("/:id/history", versionMiddleware('1.0.0'), obtenerHistorial);
+router.get("/:id/history",authJwt, versionMiddleware('1.0.0'), obtenerHistorial);
 
 /**
  * @route POST /api/notes
@@ -61,7 +62,7 @@ router.get("/:id/history", versionMiddleware('1.0.0'), obtenerHistorial);
  * @body {String} [status] - Estado de la nota (opcional).
  * @returns {Object} Nota creada.
  */
-router.post("/", versionMiddleware('1.0.0'), crearNota);
+router.post("/",authJwt, versionMiddleware('1.0.0'), crearNota);
 
 /**
  * @route POST /api/notes/:id/history
@@ -72,7 +73,7 @@ router.post("/", versionMiddleware('1.0.0'), crearNota);
  * @body {String} description - Nueva descripción de la nota.
  * @returns {Object} Cambio guardado.
  */
-router.post("/:id/history", versionMiddleware('1.0.0'), crearCambio);
+router.post("/:id/history",authJwt, versionMiddleware('1.0.0'), crearCambio);
 
 /**
  * @route PUT /api/notes/:id
@@ -84,7 +85,7 @@ router.post("/:id/history", versionMiddleware('1.0.0'), crearCambio);
  * @body {String} [status] - Nuevo estado de la nota (opcional).
  * @returns {Object} Nota actualizada.
  */
-router.put("/:id", versionMiddleware('1.0.0'), actualizarNota);
+router.put("/:id",authJwt, versionMiddleware('1.0.0'), actualizarNota);
 
 /**
  * @route DELETE /api/notes/:id
@@ -93,6 +94,6 @@ router.put("/:id", versionMiddleware('1.0.0'), actualizarNota);
  * @param {String} id - ID de la nota.
  * @returns {Object} Nota eliminada.
  */
-router.delete("/:id", versionMiddleware('1.0.0'), eliminarNota);
+router.delete("/:id",authJwt, versionMiddleware('1.0.0'), eliminarNota);
 
 module.exports = router;
