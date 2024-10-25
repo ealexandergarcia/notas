@@ -7,6 +7,8 @@ const Database = require('./server/helper/db/connect');
 const privateKey = fs.readFileSync('private.key');
 const certificate = fs.readFileSync('certificate.crt');
 const { jsonParseErrorHandler } = require('./server/middleware/errorHandler'); // Importar el manejador de errores
+const  session  = require('./server/middleware/sessionConfig'); // Importar el manejador de errores
+
 
 // Importar las rutas de notas
 const noteRoutes = require('./server/router/noteRouters');
@@ -14,9 +16,11 @@ const userRoutes = require('./server/router/userRouters');
 
 const PORT_BACKEND = 5000;
 
-// Configuracion de errores globales
+
 const app = express();
-Database.getInstance(); // Llama para inicializar la conexión
+app.use(session)
+ // Llama para inicializar la conexión
+Database.getInstance();
 
 // Cargar el certificado y la clave
 const options = {

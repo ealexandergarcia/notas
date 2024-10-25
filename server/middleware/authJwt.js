@@ -1,7 +1,10 @@
 const { expressjwt: expressJwt } = require('express-jwt');
+const fs = require('fs');
+const certificate = fs.readFileSync('certificate.csr');
+const JWT_SECRET= certificate.toString('utf8');
 
 const authJwt = expressJwt({
-  secret: process.env.JWT_SECRET,
+  secret: JWT_SECRET,
   algorithms: ['HS256']
 }).unless({
   path: [

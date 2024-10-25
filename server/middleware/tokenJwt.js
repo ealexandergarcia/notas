@@ -1,12 +1,15 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const certificate = fs.readFileSync('certificate.csr');
 
 class JwtService {
   static generateToken(payload) {
-    return jwt.sign(payload, `${process.env.JWT_SECRET}`, { expiresIn: '1h' });
+    const JWT_SECRET= certificate.toString('utf8');
+    return jwt.sign(payload, `${JWT_SECRET}`, { expiresIn: 1800000 });
   }
 
   static verifyToken(token) {
-    return jwt.verify(token, `${process.env.JWT_SECRET}`);
+    return jwt.verify(token, `${JWT_SECRET}`);
   }
 }
 
