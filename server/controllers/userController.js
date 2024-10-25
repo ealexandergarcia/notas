@@ -8,17 +8,28 @@ class UserController {
     static async createAccount(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({
+                status: 400,
+                message: 'Validation errors',
+                data: { errors: errors.array() }
+            });
         }
 
         const { username, password, email } = req.body;
         try {
-            // Hashear la contraseña antes de guardar
             const hashedPassword = await bcrypt.hash(password, 10);
             const user = await User.create({ username, password: hashedPassword, email });
-            res.status(201).json({ message: 'User account created successfully', user });
+            res.status(201).json({
+                status: 201,
+                message: 'User account created successfully',
+                data: user
+            });
         } catch (error) {
-            res.status(500).json({ message: 'Error creating user account', error: error.message });
+            res.status(500).json({
+                status: 500,
+                message: 'Error creating user account',
+                data: { error: error.message }
+            });
         }
     }
 
@@ -26,26 +37,44 @@ class UserController {
     static async logIn(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({
+                status: 400,
+                message: 'Validation errors',
+                data: { errors: errors.array() }
+            });
         }
 
         const { email, password } = req.body;
         try {
             const user = await User.findOne({ email });
             if (!user) {
-                return res.status(404).json({ message: 'Invalid email or password' });
+                return res.status(404).json({
+                    status: 404,
+                    message: 'Invalid email or password'
+                });
             }
 
-            // Comparar la contraseña proporcionada con la almacenada
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.status(401).json({ message: 'Invalid email or password' });
+                return res.status(401).json({
+                    status: 401,
+                    message: 'Invalid email or password'
+                });
             }
 
             const token = tokenJwt.generateToken({ userId: user._id, username: user.username });
-            res.status(200).json({ message: 'User logged in successfully', token });
+            req.session.auth = token;
+            res.status(200).json({
+                status: 200,
+                message: 'User logged in successfully',
+                data: { token }
+            });
         } catch (error) {
-            res.status(500).json({ message: 'Error logging in user', error: error.message });
+            res.status(500).json({
+                status: 500,
+                message: 'Error logging in user',
+                data: { error: error.message }
+            });
         }
     }
 
@@ -53,13 +82,16 @@ class UserController {
     static async updateUser(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({
+                status: 400,
+                message: 'Validation errors',
+                data: { errors: errors.array() }
+            });
         }
 
         const { id } = req.params;
         const { username, password, email } = req.body;
         try {
-            // Hashear la nueva contraseña si se proporciona
             const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
             const updateData = { username, email };
             if (hashedPassword) {
@@ -68,11 +100,22 @@ class UserController {
 
             const user = await User.findByIdAndUpdate(id, updateData, { new: true });
             if (!user) {
-                return res.status(404).json({ message: 'User not found' });
+                return res.status(404).json({
+                    status: 404,
+                    message: 'User not found'
+                });
             }
-            res.status(200).json({ message: 'User account updated successfully', user });
+            res.status(200).json({
+                status: 200,
+                message: 'User account updated successfully',
+                data: user
+            });
         } catch (error) {
-            res.status(500).json({ message: 'Error updating user account', error: error.message });
+            res.status(500).json({
+                status: 500,
+                message: 'Error updating user account',
+                data: { error: error.message }
+            });
         }
     }
 
@@ -82,14 +125,24 @@ class UserController {
         try {
             const user = await User.findByIdAndDelete(id);
             if (!user) {
-                return res.status(404).json({ message: 'User not found' });
+                return res.status(404).json({
+                    status: 404,
+                    message: 'User not found'
+                });
             }
-            res.status(200).json({ message: 'User account deleted successfully', user });
+            res.status(200).json({
+                status: 200,
+                message: 'User account deleted successfully',
+                data: user
+            });
         } catch (error) {
-            res.status(500).json({ message: 'Error deleting user account', error: error.message });
+            res.status(500).json({
+                status: 500,
+                message: 'Error deleting user account',
+                data: { error: error.message }
+            });
         }
     }
-
 }
 
 module.exports = UserController;
