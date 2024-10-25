@@ -1,5 +1,6 @@
 const { versionMiddleware } = require('../middleware/versionMiddleware'); 
 const { authJwt, handleAuthErrors } = require('../middleware/authJwt'); 
+const { limit } = require('../middleware/limit'); // Ensure this is the correct import for your rate limiting
 const router = require("express").Router();
 const UserController = require('../controllers/userController');
 
@@ -18,7 +19,7 @@ const UserController = require('../controllers/userController');
  * @body {String} email - Email address of the user.
  * @returns {Object} User created.
  */
-router.post("/", versionMiddleware('1.0.0'), UserController.createAccount);
+router.post("/", versionMiddleware('1.0.0'), limit("post"), UserController.createAccount);
 
 /**
  * @route POST /api/users/login
@@ -28,7 +29,7 @@ router.post("/", versionMiddleware('1.0.0'), UserController.createAccount);
  * @body {String} password - Password for the account.
  * @returns {Object} Login token.
  */
-router.post("/login", versionMiddleware('1.0.0'), UserController.logIn);
+router.post("/login", versionMiddleware('1.0.0'), limit("login"), UserController.logIn);
 
 /**
  * @route PUT /api/users/:id
@@ -40,7 +41,7 @@ router.post("/login", versionMiddleware('1.0.0'), UserController.logIn);
  * @body {String} [email] - New email (optional).
  * @returns {Object} Updated user account.
  */
-router.put("/:id", versionMiddleware('1.0.0'), authJwt, UserController.updateUser);
+router.put("/:id", versionMiddleware('1.0.0'), authJwt, limit("put"), UserController.updateUser);
 
 /**
  * @route DELETE /api/users/:id
@@ -49,6 +50,6 @@ router.put("/:id", versionMiddleware('1.0.0'), authJwt, UserController.updateUse
  * @param {String} id - ID of the user.
  * @returns {Object} Deleted user account.
  */
-router.delete("/:id", versionMiddleware('1.0.0'), authJwt, UserController.deleteUser);
+router.delete("/:id", versionMiddleware('1.0.0'), authJwt, limit("delete"), UserController.deleteUser);
 
 module.exports = router;
