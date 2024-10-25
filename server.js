@@ -8,7 +8,7 @@ const privateKey = fs.readFileSync('private.key');
 const certificate = fs.readFileSync('certificate.crt');
 const { jsonParseErrorHandler } = require('./server/middleware/errorHandler'); // Importar el manejador de errores
 const  session  = require('./server/middleware/sessionConfig'); // Importar el manejador de errores
-
+const {auth} = require('./server/middleware/decodedJWT')
 
 // Importar las rutas de notas
 const noteRoutes = require('./server/router/noteRouters');
@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 // Agregar las rutas de notas
-app.use('/api/notes', noteRoutes);
+app.use('/api/notes',auth, noteRoutes);
 app.use('/api/users', userRoutes);
 
 // Configuración de manejo de errores globales
