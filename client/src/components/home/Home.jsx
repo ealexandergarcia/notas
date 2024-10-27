@@ -35,11 +35,11 @@ export default function NotesScreen() {
       <header className="flex justify-between items-center p-4 pt-12">
         <h1 className="text-5xl font-semibold">Notes</h1>
         <div className="flex space-x-2">
-          <button className="w-12 h-12 flex items-center justify-center rounded-2xl bg-[#3B3B3B] hover:bg-gray-800 transition-colors duration-200">
-            <img src={searchIcon} className="w-4 h-4" alt="Buscar" />
+          <button className="w-[50px] h-[50px] flex items-center justify-center rounded-2xl bg-[#3B3B3B] hover:bg-gray-800 transition-colors duration-200">
+            <img src={searchIcon} className="w-5 h-5" alt="Buscar" />
           </button>
-          <button className="w-12 h-12 flex items-center justify-center rounded-2xl bg-[#3B3B3B] hover:bg-gray-800 transition-colors duration-200">
-            <img src={infoOutlineIcon} className="w-4 h-4" alt="Información" />
+          <button className="w-[50px] h-[50px] flex items-center justify-center rounded-2xl bg-[#3B3B3B] hover:bg-gray-800 transition-colors duration-200">
+            <img src={infoOutlineIcon} className="w-5 h-5" alt="Información" />
           </button>
         </div>
       </header>
