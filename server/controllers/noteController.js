@@ -9,18 +9,24 @@ class NoteController {
      * @param {Object} res - La respuesta HTTP.
      */
     static async getNotes(req, res) {
-        const userId = req.auth.userId;
-        const { page = 1, limit = 10 } = req.query; // Paginación
-        console.log('Received GET request for /api/notes');
+        console.log(req.user.userId);
+        const userId = req.user.userId;
+        //   console.log(req.auth);
+    // console.log(req.session.auth);
+        const { page = 1, limit = 10 } = req.query; // Pagination parameters
+        console.log('Received GET request for /api/notes'); // Add log
 
         try {
+            // Filter notes by user_id and status "visible"
             const notes = await Note.find({
-                user_id: userId,
+                user_id:userId,
                 status: "visible"
             })
-                .skip((page - 1) * limit)
-                .limit(parseInt(limit))
-                .select('-changes');
+                .skip((page - 1) * limit)  // Skip the first (page-1)*limit
+                .limit(parseInt(limit))     // Limit the number of results
+                .select('-changes');        // Exclude the changes field
+
+            console.log(notes);
 
             if (!notes || notes.length === 0) {
                 return res.status(404).json({ status: 404, message: 'No notes found' });
@@ -29,7 +35,7 @@ class NoteController {
             res.status(200).json({
                 status: 200,
                 message: 'Notes retrieved successfully',
-                data: notes
+                notes
             });
         } catch (error) {
             console.error(error);
@@ -44,8 +50,9 @@ class NoteController {
      * @param {Object} res - La respuesta HTTP.
      */
     static async getNoteByNoteId(req, res) {
-        const userId = req.auth.userId;
-        const { noteId } = req.params;
+        const userId = req.user.userId;
+        console.log(userId);
+        const { noteId } = req.params; // Get user ID and note ID from route parameters
 
         if (!mongoose.Types.ObjectId.isValid(noteId)) {
             return res.status(400).json({ status: 400, message: 'Invalid note ID' });
@@ -55,17 +62,17 @@ class NoteController {
             const note = await Note.findOne({
                 _id: noteId,
                 user_id: userId,
-                status: 'visible'
+                status: 'visible' // Ensure the note is visible
             }).select('-changes');
 
             if (!note) {
-                return res.status(404).json({ status: 404, message: 'Note not found or not visible' });
+                return res.status(404).json({ message: 'Note not found or not visible' });
             }
 
             res.status(200).json({
                 status: 200,
                 message: 'Note retrieved successfully',
-                data: note
+                note
             });
         } catch (error) {
             console.error(error);
@@ -81,8 +88,9 @@ class NoteController {
      */
     static async searchNotes(req, res) {
         const { query } = req.query;
-        const userId = req.auth.userId;
-
+        const userId = req.user.userId;
+        console.log(userId);
+        // Check if the query is defined
         if (!query) {
             return res.status(400).json({ status: 400, message: 'You must provide a search criterion' });
         }
@@ -94,18 +102,18 @@ class NoteController {
                 user_id: userId,
             }).select('-changes');
 
+            // Check if any notes were found
             if (!notes || notes.length === 0) {
                 return res.status(404).json({ status: 404, message: 'No notes found with that search criterion' });
             }
 
             res.status(200).json({
-                status: 200,
                 message: 'Notes found',
-                data: notes
+                notes
             });
         } catch (error) {
             console.error('Error while searching for notes:', error);
-            res.status(500).json({ status: 500, message: 'Error while searching for notes' });
+            res.status(500).json({ status: 500, message: 'Error while searching for notes', error: error.message });
         }
     }
 
@@ -117,26 +125,24 @@ class NoteController {
      */
     static async obtenerHistorial(req, res) {
         const { id } = req.params;
-
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ status: 400, message: 'Invalid note ID' });
+            return res.status(400).json({ message: 'Invalid note ID' });
         }
 
         try {
-            const note = await Note.findById(id);
+            const note = await Note.findById(id); // Sin populate
 
             if (!note) {
-                return res.status(404).json({ status: 404, message: 'Note not found' });
+                return res.status(404).json({ message: 'Note not found' });
             }
 
             res.status(200).json({
-                status: 200,
                 message: 'Note history',
-                data: note.changes
+                changes: note.changes
             });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ status: 500, message: 'Error retrieving note history' });
+            res.status(500).json({ message: 'Error retrieving note history' });
         }
     }
 
@@ -149,25 +155,24 @@ class NoteController {
     static async crearNota(req, res) {
         try {
             const { title, description, status } = req.body;
-            const userId = req.auth.userId;
+            const userId = req.user.userId;
 
             const newNote = new Note({
                 title,
                 description,
-                user_id: userId,
+                user_id:userId,
                 status
             });
 
             await newNote.save();
 
             res.status(201).json({
-                status: 201,
                 message: 'Note created successfully',
-                data: newNote
+                note: newNote
             });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ status: 500, message: 'Error creating note' });
+            res.status(500).json({ message: 'Error creating note' });
         }
     }
 
@@ -182,34 +187,35 @@ class NoteController {
         const { title, description } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ status: 400, message: 'Invalid note ID' });
+            return res.status(400).json({ message: 'Invalid note ID' });
         }
 
         try {
             const note = await Note.findById(id);
             if (!note) {
-                return res.status(404).json({ status: 404, message: 'Note not found' });
+                return res.status(404).json({ message: 'Note not found' });
             }
 
+            // Guardar el cambio en el historial
             note.changes.push({
                 title: note.title,
                 description: note.description,
                 date: new Date()
             });
 
+            // Actualizar la nota actual con los datos nuevos
             note.title = title || note.title;
             note.description = description || note.description;
 
             await note.save();
 
             res.status(200).json({
-                status: 200,
                 message: 'Change saved successfully',
-                data: note
+                note
             });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ status: 500, message: 'Error creating change' });
+            res.status(500).json({ message: 'Error creating change' });
         }
     }
 
@@ -224,21 +230,23 @@ class NoteController {
         const { title, description, status } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ status: 400, message: 'Invalid note ID' });
+            return res.status(400).json({ message: 'Invalid note ID' });
         }
 
         try {
             const note = await Note.findById(id);
             if (!note) {
-                return res.status(404).json({ status: 404, message: 'Note not found' });
+                return res.status(404).json({ message: 'Note not found' });
             }
 
+            // Guardar el cambio en el historial
             note.changes.push({
                 title: note.title,
                 description: note.description,
                 date: new Date()
             });
 
+            // Actualizar solo los campos que han sido modificados
             if (title) note.title = title;
             if (description) note.description = description;
             if (status) note.status = status;
@@ -246,47 +254,52 @@ class NoteController {
             await note.save();
 
             res.status(200).json({
-                status: 200,
                 message: 'Note updated successfully',
-                data: note
+                note
             });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ status: 500, message: 'Error updating note' });
+            res.status(500).json({ message: 'Error updating note' });
         }
     }
 
     /**
      * @method eliminarNota
-     * @description Eliminar una nota. Cambia el estado de la nota a 'hidden' en lugar de eliminarla físicamente.
+     * @description Eliminar una nota.
+     * Cambia el estado de la nota a 'hidden' en lugar de eliminarla físicamente.
      * @param {Object} req - La solicitud HTTP.
      * @param {Object} res - La respuesta HTTP.
      */
     static async eliminarNota(req, res) {
         const { id } = req.params;
 
+        // Validate the provided ID
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ status: 400, message: 'Invalid note ID' });
         }
 
         try {
+            // Find the note by ID
             const note = await Note.findById(id);
 
+            // Check if the note exists
             if (!note) {
-                return res.status(404).json({ status: 404, message: 'Note not found' });
+                return res.status(404).json({ status: 400, message: 'Note not found' });
             }
 
+            // Check if the note is already hidden
             if (note.status === 'hidden') {
                 return res.status(400).json({ status: 400, message: 'Note is already hidden' });
             }
 
+            // Change the status to hidden
             note.status = 'hidden';
-            await note.save();
+            await note.save(); // Save the updated note
 
             res.status(200).json({
                 status: 200,
                 message: 'Note successfully hidden',
-                data: note
+                note
             });
         } catch (error) {
             console.error(error);
