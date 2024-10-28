@@ -30,8 +30,10 @@ const options = {
 
 // Middleware para habilitar CORS para el puerto 3000
 app.use(cors({
-    origin: 'http://localhost:3000' // Permitir solicitudes desde el puerto 3000
+    origin: ['http://localhost:3000', 'https://localhost:3000'],
+    credentials: true // if you're using cookies or sessions
 }));
+
 
 // Middleware para parsear JSON
 app.use(express.json());
