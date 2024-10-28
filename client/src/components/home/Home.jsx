@@ -3,10 +3,13 @@ import rafiki from '../../assets/img/rafiki.png';
 import searchIcon from '../../assets/img/search.png';
 import infoOutlineIcon from '../../assets/img/info_outline.png';
 import { Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 
 const colors = ['bg-[#FFAB91]', 'bg-[#D3D0CB]', 'bg-[#F8BBD0]', 'bg-[#E6EE9C]', 'bg-[#80DEEA]'];
 
 export default function NotesScreen() {
+  const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export default function NotesScreen() {
           const visibleNotes = data.notes.filter(note => note.status === 'visible');
           setNotes(visibleNotes);
         } else {
-          console.error("Error al obtener notas:", data.message);
+          console.error("Error al obtener notas:", data);
         }
       } catch (error) {
         console.error("Error de red:", error);
@@ -78,7 +81,7 @@ export default function NotesScreen() {
         )}
       </main>
       <footer className="p-4 absolute right-5 bottom-5">
-        <button className="w-16 h-16 bg-[#252525] float-right text-black hover:bg-gray-200 rounded-full font-medium flex items-center justify-center transition-colors duration-200 shadow-[-5px_0px_15px_rgba(0,0,0,0.5)]">
+        <button onClick={() => navigate('/createNote')} className="w-16 h-16 bg-[#252525] float-right text-black hover:bg-gray-200 rounded-full font-medium flex items-center justify-center transition-colors duration-200 shadow-[-5px_0px_15px_rgba(0,0,0,0.5)]">
           <Plus className="text-white h-5 w-5" />
         </button>
       </footer>
