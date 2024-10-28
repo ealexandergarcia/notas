@@ -34,8 +34,9 @@ const EditNote = () => {
         headers: {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
-          'Authorization': `Bearer ${token}`
-        }
+        },
+        credentials:  'include'
+
       });
       if (response.ok) {
         const data = await response.json();
@@ -66,8 +67,8 @@ const EditNote = () => {
         headers: {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
-          'Authorization': `Bearer ${token}`,
         },
+        credentials:  'include',
         body: JSON.stringify(noteData),
       });
 

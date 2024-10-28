@@ -78,8 +78,9 @@ const CreateNote = () => {
         headers: {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
-          'Authorization': `Bearer ${token}`,
         },
+        credentials:  'include',
+
         body: JSON.stringify(noteData),
       });
 

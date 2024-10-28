@@ -27,8 +27,8 @@ export default function NotesScreen() {
           headers: {
             'Content-Type': 'application/json',
             'x-version': '1.0.0',
-            'Authorization': `Bearer ${token}`,
           },
+          credentials:  'include'
         });
 
         const data = await response.json();
@@ -62,8 +62,8 @@ export default function NotesScreen() {
         headers: {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
-          'Authorization': `Bearer ${token}`,
         },
+        credentials:  'include'
       });
 
       const data = await response.json();
@@ -100,8 +100,8 @@ export default function NotesScreen() {
         headers: {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
-          'Authorization': `Bearer ${token}`,
         },
+        credentials:  'include'
       });
 
       if (response.ok) {
