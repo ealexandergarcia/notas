@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import rafiki from '../../assets/img/rafiki.png';
 import searchIcon from '../../assets/img/search.png';
 import infoOutlineIcon from '../../assets/img/info_outline.png';
+import cuate from '../../assets/img/cuate.png';
 import { Plus } from 'lucide-react';
 import Swal from 'sweetalert2'; // Asegúrate de tener sweetalert2 instalado
 import { useNavigate } from 'react-router-dom';
@@ -188,46 +189,50 @@ export default function NotesScreen() {
           )}
         </div>
       </header>
-      <main className="flex-grow flex flex-col items-center pt-8 p-6 max-h-[85vh]">
-        {!searchActive ? ( // Muestra el contenido solo si no está en modo de búsqueda
-          notes.length === 0 ? (
-            <div className="text-center">
-              <div className="w-48 h-48 mb-6">
-                <img src={rafiki} alt="Imagen de ejemplo" />
-              </div>
-              <p className="text-lg mb-6">Create your first note!</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
-              {notes.map((note, index) => ( // Renderiza todas las notas
-                <div
-                  key={note._id}
-                  className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
-                  onClick={() => handleNoteClick(note._id)} // Llama a la función para manejar el clic
-                >
-                  <h2 className="text-xl font-bold mb-2">{note.title}</h2>
-                </div>
-              ))}
-            </div>
-          )
-        ) : filteredNotes.length === 0 ? ( // Muestra contenido solo si hay una búsqueda activa
-          <div className="text-center">
-            <p className="text-lg mb-6">No se encontraron notas.</p>
+      <main className={`flex-grow flex flex-col items-center pt-8 p-6 max-h-[85vh] ${(!notes.length && !searchActive) || (searchActive && filteredNotes.length === 0) ? 'justify-center' : ''}`}>
+  {!searchActive ? ( // Muestra el contenido solo si no está en modo de búsqueda
+    notes.length === 0 ? (
+      <div className="text-center">
+        <div className="w-50 h-50 mb-6">
+          <img src={rafiki} alt="Imagen de ejemplo" />
+        </div>
+        <p className="text-lg mb-6">Create your first note!</p>
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
+        {notes.map((note, index) => ( // Renderiza todas las notas
+          <div
+            key={note._id}
+            className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
+            onClick={() => handleNoteClick(note._id)} // Llama a la función para manejar el clic
+          >
+            <h2 className="text-xl font-bold mb-2">{note.title}</h2>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
-            {filteredNotes.map((note, index) => ( // Renderiza las notas filtradas
-              <div
-                key={note._id}
-                className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
-                onClick={() => handleNoteClick(note._id)} // Llama a la función para manejar el clic
-              >
-                <h2 className="text-xl font-bold mb-2">{note.title}</h2>
-              </div>
-            ))}
-          </div>
-        )}
-      </main>
+        ))}
+      </div>
+    )
+  ) : filteredNotes.length === 0 ? ( // Muestra contenido solo si hay una búsqueda activa
+    <div className="flex flex-col items-center">
+      <div className="w-50 h-50">
+        <img src={cuate} alt="Imagen de ejemplo" />
+      </div>
+      <p className="text-lg mb-6">File not found. Try searching again.</p>
+    </div>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
+      {filteredNotes.map((note, index) => ( // Renderiza las notas filtradas
+        <div
+          key={note._id}
+          className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
+          onClick={() => handleNoteClick(note._id)} // Llama a la función para manejar el clic
+        >
+          <h2 className="text-xl font-bold mb-2">{note.title}</h2>
+        </div>
+      ))}
+    </div>
+  )}
+</main>
+
       <footer className="p-4 absolute right-5 bottom-5">
         <button onClick={() => navigate('/createNote')} className="w-16 h-16 bg-[#252525] float-right text-black hover:bg-gray-200 rounded-full font-medium flex items-center justify-center transition-colors duration-200 shadow-[-5px_0px_15px_rgba(0,0,0,0.5)]">
           <Plus className="text-white h-5 w-5" />
