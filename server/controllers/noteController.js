@@ -9,10 +9,7 @@ class NoteController {
      * @param {Object} res - La respuesta HTTP.
      */
     static async getNotes(req, res) {
-      const userId = req.data.userId;
-    //   console.log(req.auth);
-      console.log(req.data.userId);
-      console.log(req.session.auth);
+      const userId = req.auth.userId;
         const { page = 1, limit = 10 } = req.query; // Pagination parameters
         console.log('Received GET request for /api/notes'); // Add log
 

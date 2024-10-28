@@ -6,28 +6,40 @@ import { Plus } from 'lucide-react';
 
 const colors = ['bg-[#FFAB91]', 'bg-[#D3D0CB]', 'bg-[#F8BBD0]', 'bg-[#E6EE9C]', 'bg-[#80DEEA]'];
 
-// Datos de prueba
-const testNotes = [
-  { id: '1', title: 'Reunión de equipo', content: 'Discutir los objetivos del proyecto...' },
-  { id: '2', title: 'Lista de compras', content: 'Leche, pan, huevos, frutas, verduras, detergente.' },
-  { id: '3', title: 'Ideas para el blog', content: '1. Cómo mejorar la productividad...' },
-  { id: '4', title: 'Recordatorios', content: 'Llamar al dentista para agendar cita...' },
-  { id: '5', title: 'Metas personales', content: 'Leer 2 libros al mes. Hacer ejercicio...' },
-  { id: '4', title: 'Recordatorios', content: 'Llamar al dentista para agendar cita...' },
-  { id: '5', title: 'Metas personales', content: 'Leer 2 libros al mes. Hacer ejercicio...' },
-  { id: '4', title: 'Recordatorios', content: 'Llamar al dentista para agendar cita...' },
-  { id: '5', title: 'Metas personales', content: 'Leer 2 libros al mes. Hacer ejercicio...' }
-];
-
 export default function NotesScreen() {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    // Simulamos la obtención de notas del backend
-    setTimeout(() => {
-      setNotes(testNotes);
-      console.log("Notas cargadas:", testNotes);
-    }, 1000); // Simulamos un delay de 1 segundo
+    const fetchNotes = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        console.log(token);
+
+        const response = await fetch('https://localhost:5000/api/notes', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-version': '1.0.0',
+            'Authorization': `Bearer ${token}`, // Aquí es donde añades el token
+          },
+        });
+
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Filtrar notas con status "visible"
+          const visibleNotes = data.notes.filter(note => note.status === 'visible');
+          setNotes(visibleNotes);
+        } else {
+          console.error("Error al obtener notas:", data.message);
+        }
+      } catch (error) {
+        console.error("Error de red:", error);
+      }
+    };
+
+    fetchNotes();
   }, []);
 
   return (
@@ -43,7 +55,7 @@ export default function NotesScreen() {
           </button>
         </div>
       </header>
-      <main className="flex-grow flex flex-col items-center pt-8 p-6 justify-center max-h-[85vh]">
+      <main className="flex-grow flex flex-col items-center pt-8 p-6  max-h-[85vh]">
         {notes.length === 0 ? (
           <div className="text-center">
             <div className="w-48 h-48 mb-6">
@@ -55,11 +67,11 @@ export default function NotesScreen() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
             {notes.map((note, index) => (
               <div
-                key={note.id}
+                key={note._id} // Asegúrate de usar el id correcto aquí
                 className={`${colors[index % colors.length]} rounded-lg p-4 text-black`}
               >
                 <h2 className="text-xl font-bold mb-2">{note.title}</h2>
-                <p>{note.content}</p>
+                <p>{note.description}</p>
               </div>
             ))}
           </div>

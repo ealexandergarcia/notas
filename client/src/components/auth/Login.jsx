@@ -1,4 +1,3 @@
-// src/components/auth/Login.jsx
 import React, { useState } from 'react';
 import smallStarImg from '../../assets/img/smallStar.svg';
 import agreeImg from '../../assets/img/agree.svg';
@@ -9,10 +8,13 @@ import googleImg from '../../assets/img/google.svg';
 import facebookImg from '../../assets/img/facebook.svg';
 import appleImg from '../../assets/img/apple.svg';
 import LineImg from '../../assets/img/Line.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -23,10 +25,42 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(''); // Reset previous errors
+
+    try {
+      const response = await fetch('https://localhost:5000/api/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-version': '1.0.0',
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include' // Esto permite el envío de cookies
+    });
+    
+    
+    
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data); // Log the token or user data if needed
+        // You can save the token in localStorage or sessionStorage
+        localStorage.setItem('token', data.data.token);
+        navigate('/home'); // Redirect to home on successful login
+      } else {
+        const data = await response.json();
+        setError(data.message || 'Error al iniciar sesión'); // Show error message
+      }
+    } catch (error) {
+      setError('Error de conexión, intenta nuevamente.');
+    }
+  };
+
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center text-white p-4">
       <h1 className="font-poppins font-bold mb-10 text-3xl">Log in</h1>
-      <form className="w-full max-w-xs">
+      <form className="w-full max-w-xs" onSubmit={handleSubmit}>
         <div className="relative mb-4 w-full text-sm">
           <p className="font-inter font-regular mb-1.5 text-left">Email address</p>
           <input
@@ -68,6 +102,7 @@ const Login = () => {
         <button className="bg-[#FE0000] font-inter font-semibold text-slate-50 px-6 py-3 rounded-lg mb-5 w-full">
           Log in
         </button>
+        {error && <p className="text-red-500 text-center">{error}</p>} {/* Error message display */}
       </form>
       <div className="flex flex-row mb-5 gap-x-2 items-center">
         <img src={LineImg} alt="Line" />
