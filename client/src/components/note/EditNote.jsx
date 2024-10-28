@@ -34,8 +34,9 @@ const EditNote = () => {
         headers: {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
-          'Authorization': `Bearer ${token}`
-        }
+        },
+        credentials:  'include'
+
       });
       if (response.ok) {
         const data = await response.json();
@@ -66,15 +67,15 @@ const EditNote = () => {
         headers: {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
-          'Authorization': `Bearer ${token}`,
         },
+        credentials:  'include',
         body: JSON.stringify(noteData),
       });
 
       if (response.ok) {
         await MySwal.fire('¡Guardado!', 'La nota se ha actualizado correctamente', 'success');
         setIsReadOnly(true); // Regresar a modo solo lectura después de guardar
-        navigate('/home');
+        navigate('/#/home');
       } else {
         console.error('Error al guardar la nota:', response.statusText);
       }
@@ -92,7 +93,7 @@ const EditNote = () => {
     <div className="flex flex-col h-screen text-white">
       <header className="flex justify-between items-center p-4 pt-12">
         <button
-          onClick={() => navigate('/home')}
+          onClick={() => navigate('/#/home')}
           className="w-[50px] h-[50px] flex items-center justify-center rounded-2xl bg-[#3B3B3B] hover:bg-gray-800 transition-colors duration-200"
         >
           <img src={chevron_left} className="w-3 h-5" alt="Volver" />

@@ -9,7 +9,10 @@ class NoteController {
      * @param {Object} res - La respuesta HTTP.
      */
     static async getNotes(req, res) {
-      const userId = req.auth.userId;
+        console.log(req.user.userId);
+        const userId = req.user.userId;
+        //   console.log(req.auth);
+    // console.log(req.session.auth);
         const { page = 1, limit = 10 } = req.query; // Pagination parameters
         console.log('Received GET request for /api/notes'); // Add log
 
@@ -47,8 +50,8 @@ class NoteController {
      * @param {Object} res - La respuesta HTTP.
      */
     static async getNoteByNoteId(req, res) {
-      const userId = req.auth.userId;
-      console.log(userId);
+        const userId = req.user.userId;
+        console.log(userId);
         const { noteId } = req.params; // Get user ID and note ID from route parameters
 
         if (!mongoose.Types.ObjectId.isValid(noteId)) {
@@ -85,7 +88,7 @@ class NoteController {
      */
     static async searchNotes(req, res) {
         const { query } = req.query;
-        const userId = req.auth.userId;
+        const userId = req.user.userId;
         console.log(userId);
         // Check if the query is defined
         if (!query) {
@@ -152,7 +155,7 @@ class NoteController {
     static async crearNota(req, res) {
         try {
             const { title, description, status } = req.body;
-            const userId = req.auth.userId;
+            const userId = req.user.userId;
 
             const newNote = new Note({
                 title,

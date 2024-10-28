@@ -67,7 +67,8 @@ class UserController {
             res.status(200).json({
                 status: 200,
                 message: 'User logged in successfully',
-                data: { token }
+                data: { token },
+                otro:req.session
             });
         } catch (error) {
             res.status(500).json({
