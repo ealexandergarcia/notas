@@ -1,10 +1,11 @@
+// src/components/note/NotesScreen.jsx
+
 import React, { useState, useEffect } from 'react';
 import rafiki from '../../assets/img/rafiki.png';
 import searchIcon from '../../assets/img/search.png';
 import infoOutlineIcon from '../../assets/img/info_outline.png';
 import { Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
 
 const colors = ['bg-[#FFAB91]', 'bg-[#D3D0CB]', 'bg-[#F8BBD0]', 'bg-[#E6EE9C]', 'bg-[#80DEEA]'];
 
@@ -16,22 +17,18 @@ export default function NotesScreen() {
     const fetchNotes = async () => {
       try {
         const token = localStorage.getItem('token');
-        console.log(token);
-
         const response = await fetch('https://localhost:5000/api/notes', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             'x-version': '1.0.0',
-            'Authorization': `Bearer ${token}`, // Aquí es donde añades el token
+            'Authorization': `Bearer ${token}`,
           },
         });
-
 
         const data = await response.json();
 
         if (response.ok) {
-          // Filtrar notas con status "visible"
           const visibleNotes = data.notes.filter(note => note.status === 'visible');
           setNotes(visibleNotes);
         } else {
@@ -44,6 +41,10 @@ export default function NotesScreen() {
 
     fetchNotes();
   }, []);
+
+  const openNote = (id) => {
+    navigate(`/editNote?id=${id}`);
+  };
 
   return (
     <div className="flex flex-col h-screen text-white">
@@ -58,7 +59,7 @@ export default function NotesScreen() {
           </button>
         </div>
       </header>
-      <main className="flex-grow flex flex-col items-center pt-8 p-6  max-h-[85vh]">
+      <main className="flex-grow flex flex-col items-center pt-8 p-6 max-h-[85vh]">
         {notes.length === 0 ? (
           <div className="text-center">
             <div className="w-48 h-48 mb-6">
@@ -70,11 +71,11 @@ export default function NotesScreen() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
             {notes.map((note, index) => (
               <div
-                key={note._id} // Asegúrate de usar el id correcto aquí
-                className={`${colors[index % colors.length]} rounded-lg p-4 text-black`}
+                key={note._id}
+                className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
+                onClick={() => openNote(note._id)}
               >
                 <h2 className="text-xl font-bold mb-2">{note.title}</h2>
-                <p>{note.description}</p>
               </div>
             ))}
           </div>
