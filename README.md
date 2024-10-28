@@ -495,3 +495,59 @@ Versión Actual: 1.0.0
       }
     }
     ```
+## DEPENCENDIAS
+```json
+{
+  "name": "notepad",                      // Nombre del proyecto
+  "version": "1.0.0",                     // Versión actual del proyecto
+  "main": "server.js",                    // Archivo principal del proyecto
+  "keywords": [],                          // Palabras clave relacionadas con el proyecto
+  "author": "",                            // Autor del proyecto
+  "license": "ISC",                       // Licencia del proyecto
+  "scripts": {                             // Scripts de NPM para tareas de desarrollo
+    "dev:back": "node --env-file .env --watch server.js",  // Inicia el servidor en modo desarrollo
+    "dev:front": "vite",                   // Inicia el frontend con Vite
+    "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",  // Inicia ambos servidores simultáneamente
+    "build": "vite build",                 // Compila el proyecto para producción
+    "lint": "eslint .",                    // Ejecuta el linter ESLint en el proyecto
+    "preview": "vite preview"              // Previsualiza el proyecto después de compilar
+  },
+  "dependencies": {                        // Dependencias del proyecto
+    "bcrypt": "^5.1.1",                    // Librería para encriptar contraseñas
+    "bcryptjs": "^2.4.3",                  // Implementación de bcrypt en JavaScript puro
+    "concurrently": "^9.0.1",              // Ejecuta múltiples comandos al mismo tiempo
+    "cors": "^2.8.5",                      // Middleware para habilitar CORS
+    "express": "^4.21.1",                  // Framework web para Node.js
+    "express-jwt": "^8.4.1",               // Middleware para autenticación JWT en Express
+    "express-rate-limit": "^7.4.1",        // Middleware para limitar las tasas de solicitud
+    "express-session": "^1.18.1",          // Middleware para manejar sesiones en Express
+    "express-validator": "^7.2.0",         // Middleware para validar datos en Express
+    "https": "^1.0.0",                     // Módulo de HTTPS para seguridad
+    "jsonwebtoken": "^9.0.2",              // Librería para manejar JWT
+    "lucide-react": "^0.453.0",            // Librería de iconos SVG para React
+    "mongoose": "^8.7.2",                  // ODM para MongoDB
+    "notepad": "file:",                    // Dependencia local, probablemente un módulo personalizado
+    "react": "^18.3.1",                    // Biblioteca para construir interfaces de usuario
+    "react-dom": "^18.3.1",                // Interfaz entre React y el DOM
+    "react-router-dom": "^6.27.0",         // Librería para manejar rutas en aplicaciones React
+    "semver": "^7.6.3",                    // Biblioteca para manejar versiones semánticas
+    "sweetalert2": "^11.14.4",             // Librería para mostrar alertas atractivas
+    "sweetalert2-react-content": "^5.0.7"  // Integración de SweetAlert2 con React
+  },
+  "devDependencies": {                     // Dependencias de desarrollo
+    "@eslint/js": "^9.11.1",               // ESLint para JavaScript
+    "@types/react": "^18.3.10",            // Tipos para React
+    "@types/react-dom": "^18.3.0",         // Tipos para React DOM
+    "@vitejs/plugin-react": "^4.3.2",      // Plugin para usar React con Vite
+    "autoprefixer": "^10.4.20",            // PostCSS plugin para agregar prefijos CSS automáticamente
+    "eslint": "^9.11.1",                    // Herramienta de linting para mantener la calidad del código
+    "eslint-plugin-react": "^7.37.0",      // Plugin de ESLint para verificar reglas de React
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",  // Plugin de ESLint para verificar reglas de hooks de React
+    "eslint-plugin-react-refresh": "^0.4.12",  // Plugin para habilitar React Fast Refresh
+    "globals": "^15.9.0",                   // Definiciones de variables globales
+    "postcss": "^8.4.47",                   // Herramienta para transformar CSS con plugins
+    "tailwindcss": "^3.4.14",               // Framework de CSS para diseño rápido
+    "vite": "^5.4.8"                        // Herramienta de construcción para proyectos web
+  }
+}
+```
