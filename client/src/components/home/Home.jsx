@@ -236,7 +236,7 @@ export default function NotesScreen() {
       </main>
 
       <footer className="p-4 absolute right-5 bottom-5">
-        <button onClick={() => navigate('/createNote')} className="w-16 h-16 bg-[#252525] float-right text-black hover:bg-gray-200 rounded-full font-medium flex items-center justify-center transition-colors duration-200 shadow-[-5px_0px_15px_rgba(0,0,0,0.5)]">
+        <button onClick={() => navigate('/#/createNote')} className="w-16 h-16 bg-[#252525] float-right text-black hover:bg-gray-200 rounded-full font-medium flex items-center justify-center transition-colors duration-200 shadow-[-5px_0px_15px_rgba(0,0,0,0.5)]">
           <Plus className="text-white h-5 w-5" />
         </button>
       </footer>

@@ -65,7 +65,7 @@ const CreateNote = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate('/home'); // Navega a /home si se confirma
+        navigate('/#/home'); // Navega a /home si se confirma
       }
     });
   };
@@ -87,7 +87,7 @@ const CreateNote = () => {
       if (response.ok) {
         const result = await response.json();
         console.log('Nota creada:', result);
-        navigate('/home');
+        navigate('/#/home');
       } else {
         console.error('Error al crear la nota:', response.statusText);
       }
@@ -100,7 +100,7 @@ const CreateNote = () => {
     <div className="flex flex-col h-screen text-white">
       <header className="flex justify-between items-center p-4 pt-12">
         <button
-          onClick={() => navigate('/home')}
+          onClick={() => navigate('/#/home')}
           className="w-[50px] h-[50px] flex items-center justify-center rounded-2xl bg-[#3B3B3B] hover:bg-gray-800 transition-colors duration-200"
         >
           <img src={chevron_left} className="w-3 h-5" alt="Volver" />

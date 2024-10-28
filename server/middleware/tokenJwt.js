@@ -7,9 +7,12 @@ class JwtService {
   static generateToken(payload) {
     const expiresIn = 30 * 60 * 1000;
     return jwt.sign(payload, secret, { expiresIn });
+    const expiresIn = 30 * 60 * 1000;
+    return jwt.sign(payload, secret, { expiresIn });
   }
 
   static verifyToken(token) {
+    return jwt.verify(token, secret);
     return jwt.verify(token, secret);
   }
 }

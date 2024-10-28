@@ -11,8 +11,7 @@
     "dev:front": "vite",
     "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "serve": "vite preview"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

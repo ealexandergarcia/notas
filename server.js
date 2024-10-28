@@ -17,13 +17,7 @@ const PORT_BACKEND = 5000;
 
 
 const app = express();
-
-// Middleware para habilitar CORS para el puerto 3000
-app.use(cors({
-    origin: ['https://localhost:3000'],
-    credentials: true // if you're using cookies or sessions
-}));
-
+app.use(session)
  // Llama para inicializar la conexión
 Database.getInstance();
 
@@ -32,6 +26,12 @@ Database.getInstance();
 //     key: privateKey, // Ruta a tu clave privada
 //     cert: certificate // Ruta a tu certificado
 // };
+
+// Middleware para habilitar CORS para el puerto 3000
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://localhost:3000'],
+    credentials: true // if you're using cookies or sessions
+}));
 
 
 // Middleware para parsear JSON
