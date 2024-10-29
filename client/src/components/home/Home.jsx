@@ -5,6 +5,7 @@ import rafiki from '../../assets/img/rafiki.png';
 import searchIcon from '../../assets/img/search.png';
 import infoOutlineIcon from '../../assets/img/info_outline.png';
 import cuate from '../../assets/img/cuate.png';
+import close from '../../assets/img/close.png';
 import { Plus } from 'lucide-react';
 import Swal from 'sweetalert2'; // Asegúrate de tener sweetalert2 instalado
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +30,7 @@ export default function NotesScreen() {
             'Content-Type': 'application/json',
             'x-version': '1.0.0',
           },
-          credentials:  'include'
+          credentials: 'include'
         });
 
         const data = await response.json();
@@ -64,14 +65,14 @@ export default function NotesScreen() {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
         },
-        credentials:  'include'
+        credentials: 'include'
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
         // Actualiza las notas filtradas con los resultados de búsqueda
-        setFilteredNotes(data.notes); 
+        setFilteredNotes(data.notes);
       } else {
         console.error("Error al buscar notas:", data);
         setFilteredNotes([]); // En caso de error, vacía las notas filtradas
@@ -102,7 +103,7 @@ export default function NotesScreen() {
           'Content-Type': 'application/json',
           'x-version': '1.0.0',
         },
-        credentials:  'include'
+        credentials: 'include'
       });
 
       if (response.ok) {
@@ -154,10 +155,10 @@ export default function NotesScreen() {
     <div className="flex flex-col h-screen text-white">
       <header className="flex justify-between items-center p-4 pt-12">
         {!searchActive && <h1 className="text-5xl font-semibold">Notes</h1>} {/* Muestra el título solo si no está en modo de búsqueda */}
-        <div className="flex space-x-2">
+        <div className={`flex ${searchActive ? 'w-full' : ''} space-x-2`}>
           {!searchActive ? (
             <>
-              <button 
+              <button
                 className="w-[50px] h-[50px] flex items-center justify-center rounded-2xl bg-[#3B3B3B] hover:bg-gray-800 transition-colors duration-200"
                 onClick={toggleSearch} // Activa el modo de búsqueda
               >
@@ -171,70 +172,71 @@ export default function NotesScreen() {
               </button>
             </>
           ) : (
-            <div className="flex items-center w-full">
+            <div className="relative w-full">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={handleInputChange} // Actualiza el estado del término de búsqueda y busca
-                className="p-2 rounded-lg bg-[#3B3B3B] text-white w-full"
+                className="p-2 rounded-lg bg-[#3B3B3B] text-white w-full pr-10" // Añade padding a la derecha para que no se superponga
                 placeholder="Buscar..."
               />
-              <button 
-                className="ml-2 text-red-500" 
+              <button
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-red-500"
                 onClick={toggleSearch} // Cierra el modo de búsqueda
               >
-                X
+              <img src={close} alt="Imagen de ejemplo" />
               </button>
             </div>
+
           )}
         </div>
       </header>
       <main className={`flex-grow flex flex-col items-center pt-8 p-6 max-h-[85vh] ${(!notes.length && !searchActive) || (searchActive && filteredNotes.length === 0) ? 'justify-center' : ''}`}>
-  {!searchActive ? ( // Muestra el contenido solo si no está en modo de búsqueda
-    notes.length === 0 ? (
-      <div className="text-center">
-        <div className="w-50 h-50 mb-6">
-          <img src={rafiki} alt="Imagen de ejemplo" />
-        </div>
-        <p className="text-lg mb-6">Create your first note!</p>
-      </div>
-    ) : (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
-        {notes.map((note, index) => ( // Renderiza todas las notas
-          <div
-            key={note._id}
-            className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
-            onClick={() => handleNoteClick(note._id)} // Llama a la función para manejar el clic
-          >
-            <h2 className="text-xl font-bold mb-2">{note.title}</h2>
+        {!searchActive ? ( // Muestra el contenido solo si no está en modo de búsqueda
+          notes.length === 0 ? (
+            <div className="text-center">
+              <div className="w-50 h-50 mb-6">
+                <img src={rafiki} alt="Imagen de ejemplo" />
+              </div>
+              <p className="text-lg mb-6">Create your first note!</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
+              {notes.map((note, index) => ( // Renderiza todas las notas
+                <div
+                  key={note._id}
+                  className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
+                  onClick={() => handleNoteClick(note._id)} // Llama a la función para manejar el clic
+                >
+                  <h2 className="text-xl font-bold mb-2">{note.title}</h2>
+                </div>
+              ))}
+            </div>
+          )
+        ) : filteredNotes.length === 0 ? ( // Muestra contenido solo si hay una búsqueda activa
+          <div className="flex flex-col items-center">
+            <div className="w-50 h-50">
+              <img src={cuate} alt="Imagen de ejemplo" />
+            </div>
+            <p className="text-lg mb-6">File not found. Try searching again.</p>
           </div>
-        ))}
-      </div>
-    )
-  ) : filteredNotes.length === 0 ? ( // Muestra contenido solo si hay una búsqueda activa
-    <div className="flex flex-col items-center">
-      <div className="w-50 h-50">
-        <img src={cuate} alt="Imagen de ejemplo" />
-      </div>
-      <p className="text-lg mb-6">File not found. Try searching again.</p>
-    </div>
-  ) : (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
-      {filteredNotes.map((note, index) => ( // Renderiza las notas filtradas
-        <div
-          key={note._id}
-          className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
-          onClick={() => handleNoteClick(note._id)} // Llama a la función para manejar el clic
-        >
-          <h2 className="text-xl font-bold mb-2">{note.title}</h2>
-        </div>
-      ))}
-    </div>
-  )}
-</main>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full overflow-auto">
+            {filteredNotes.map((note, index) => ( // Renderiza las notas filtradas
+              <div
+                key={note._id}
+                className={`${colors[index % colors.length]} rounded-lg p-4 text-black cursor-pointer`}
+                onClick={() => handleNoteClick(note._id)} // Llama a la función para manejar el clic
+              >
+                <h2 className="text-xl font-bold mb-2">{note.title}</h2>
+              </div>
+            ))}
+          </div>
+        )}
+      </main>
 
       <footer className="p-4 absolute right-5 bottom-5">
-        <button onClick={() => navigate('/createNote')} className="w-16 h-16 bg-[#252525] float-right text-black hover:bg-gray-200 rounded-full font-medium flex items-center justify-center transition-colors duration-200 shadow-[-5px_0px_15px_rgba(0,0,0,0.5)]">
+        <button onClick={() => navigate('/#/createNote')} className="w-16 h-16 bg-[#252525] float-right text-black hover:bg-gray-200 rounded-full font-medium flex items-center justify-center transition-colors duration-200 shadow-[-5px_0px_15px_rgba(0,0,0,0.5)]">
           <Plus className="text-white h-5 w-5" />
         </button>
       </footer>
