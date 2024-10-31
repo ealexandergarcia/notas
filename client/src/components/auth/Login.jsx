@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
-import smallStarImg from '../../assets/img/smallStar.svg';
-import agreeImg from '../../assets/img/agree.svg';
-import disagreeImg from '../../assets/img/disagree.svg';
-import ableImg from '../../assets/img/able.svg';
-import occultImg from '../../assets/img/occult.svg';
-import googleImg from '../../assets/img/google.svg';
-import facebookImg from '../../assets/img/facebook.svg';
-import appleImg from '../../assets/img/apple.svg';
-import LineImg from '../../assets/img/Line.svg';
 import { useNavigate } from 'react-router-dom';
+// Importar imágenes como en tu código original
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -27,34 +19,34 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Reset previous errors
+    setError('');
 
     try {
       const response = await fetch('https://localhost:5000/api/users/login', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'x-version': '1.0.0',
+          'Content-Type': 'application/json',
+          'x-version': '1.0.0',
         },
         body: JSON.stringify(formData),
-        credentials: 'include' // Esto permite el envío de cookies
-    });
-    
-    
-    
+        credentials: 'include',
+      });
+
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data); // Log the token or user data if needed
-        // You can save the token in localStorage or sessionStorage
         localStorage.setItem('token', data.data.token);
-        navigate('/home'); // Redirect to home on successful login
+        navigate('/home');
       } else {
         const data = await response.json();
-        setError(data.message || 'Error al iniciar sesión'); // Show error message
+        setError(data.message || 'Error al iniciar sesión');
       }
     } catch (error) {
       setError('Error de conexión, intenta nuevamente.');
     }
+  };
+
+  const handleSignUp = () => {
+    navigate('/createAccount'); // Redirige a la página de registro
   };
 
   return (
@@ -102,7 +94,7 @@ const Login = () => {
         <button className="bg-[#FE0000] font-inter font-semibold text-slate-50 px-6 py-3 rounded-lg mb-5 w-full">
           Log in
         </button>
-        {error && <p className="text-red-500 text-center">{error}</p>} {/* Error message display */}
+        {error && <p className="text-red-500 text-center">{error}</p>}
       </form>
       <div className="flex flex-row mb-5 gap-x-2 items-center">
         <img src={LineImg} alt="Line" />
@@ -122,12 +114,12 @@ const Login = () => {
       </div>
       <div className="flex flex-row gap-x-2">
         <p className="font-inter font-regular text-sm">Don’t have an account?</p>
-        <a
+        <button
           className="font-inter font-semibold text-white border-b-2 border-slate-950 text-sm"
-          href="/createAccount"
+          onClick={handleSignUp} // Cambiado a usar navigate
         >
           Sign up
-        </a>
+        </button>
       </div>
     </div>
   );
