@@ -19,12 +19,12 @@ const PORT_BACKEND = 5000;
 const app = express();
 
 // Middleware para habilitar CORS para el puerto 3000
-// app.use(cors({
-//     origin: ['https://ealexandergarcia.github.io'],
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
-//     allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
-//     credentials: true
-// }));
+app.use(cors({
+    origin: ['https://ealexandergarcia.github.io'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+    credentials: true
+}));
 
 
  // Llama para inicializar la conexión
