@@ -46,7 +46,7 @@ const Login = () => {
   };
 
   const handleSignUp = () => {
-    navigate('/createAccount'); // Redirige a la página de registro
+    navigate('/notas/#/createAccount'); // Redirige a la página de registro
   };
 
   return (
