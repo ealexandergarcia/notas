@@ -20,9 +20,7 @@ const app = express();
 
 // Middleware para habilitar CORS para el puerto 3000
 app.use(cors({
-    origin: ['https://ealexandergarcia.github.io'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+    origin: 'https://ealexandergarcia.github.io',
     credentials: true
 }));
 
