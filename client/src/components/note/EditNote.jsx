@@ -29,7 +29,7 @@ const EditNote = () => {
   const fetchNoteData = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`https://localhost:5000/api/notes/${id}`, {
+      const response = await fetch(`https://notas-jea3xnvnr-ealexandergarcias-projects.vercel.app/api/notes/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const EditNote = () => {
   const handleSave = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`https://localhost:5000/api/notes/${noteId}`, {
+      const response = await fetch(`https://notas-jea3xnvnr-ealexandergarcias-projects.vercel.app/api/notes/${noteId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
