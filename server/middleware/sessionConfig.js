@@ -7,8 +7,8 @@ class SessionService {
     app.use(
       session({
         secret: secret,
-        resave: false,
-        saveUninitialized: true, 
+        resave: true,
+        saveUninitialized: false, 
         cookie: {
           secure: false, 
           httpOnly: true, 
