@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import agreeImg from '../../assets/img/agree.svg';
-import disagreeImg from '../../assets/img/disagree.svg';
-import smallStarImg from '../../assets/img/smallStar.svg';
 import ableImg from '../../assets/img/able.svg';
 import occultImg from '../../assets/img/occult.svg';
 

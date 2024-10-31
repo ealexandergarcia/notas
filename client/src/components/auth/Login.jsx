@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import agreeImg from '../../assets/img/agree.svg';
+import disagreeImg from '../../assets/img/disagree.svg';
 // Importar imágenes como en tu código original
 
 const Login = () => {
