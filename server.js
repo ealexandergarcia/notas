@@ -1,15 +1,11 @@
 // server.js
 const express = require('express');
-const https = require('https');
-const fs = require('fs');
-const cors = require('cors'); // Importar el paquete cors
+const cors = require('cors');
+const helmet = require('helmet');
 const Database = require('./server/helper/db/connect');
-// const privateKey = fs.readFileSync('private.key');
-// const certificate = fs.readFileSync('certificate.crt');
-const { jsonParseErrorHandler } = require('./server/middleware/errorHandler'); // Importar el manejador de errores
-const  SessionService  = require('./server/middleware/sessionConfig'); // Importar el manejador de errores
-const verifyJwt = require('./server/middleware/decodedJWT')
-// Importar las rutas de notas
+const { jsonParseErrorHandler } = require('./server/middleware/errorHandler');
+const SessionService = require('./server/middleware/sessionConfig');
+const verifyJwt = require('./server/middleware/decodedJWT');
 const noteRoutes = require('./server/router/noteRouters');
 const userRoutes = require('./server/router/userRouters');
 
@@ -24,16 +20,17 @@ app.use(cors({
     credentials: true
 }));
 
+// Configura Helmet para la CSP
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://vercel.live"],
+        // Agrega otras directivas según necesites
+    },
+}));
 
- // Llama para inicializar la conexión
+// Llama para inicializar la conexión
 Database.getInstance();
-
-// Cargar el certificado y la clave
-// const options = {
-//     key: privateKey, // Ruta a tu clave privada
-//     cert: certificate // Ruta a tu certificado
-// };
-
 
 // Middleware para parsear JSON
 app.use(express.json());
