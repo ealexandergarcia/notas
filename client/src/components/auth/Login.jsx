@@ -4,6 +4,9 @@ import agreeImg from '../../assets/img/agree.svg';
 import disagreeImg from '../../assets/img/disagree.svg';
 import occultImg from '../../assets/img/occult.svg';
 import LineImg from '../../assets/img/Line.svg';
+import facebookImg from '../../assets/img/facebook.svg';
+import googleImg from '../../assets/img/google.svg';
+import appleImg from '../../assets/img/apple.svg';
 // Importar imágenes como en tu código original
 
 const Login = () => {
