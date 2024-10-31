@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import agreeImg from '../../assets/img/agree.svg';
 import disagreeImg from '../../assets/img/disagree.svg';
 import occultImg from '../../assets/img/occult.svg';
+import LineImg from '../../assets/img/Line.svg';
 // Importar imágenes como en tu código original
 
 const Login = () => {
