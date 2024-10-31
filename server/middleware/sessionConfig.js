@@ -8,7 +8,7 @@ class SessionService {
       session({
         secret: secret,
         resave: false,
-        saveUninitialized: false, 
+        saveUninitialized: true, 
         cookie: {
           secure: false, 
           httpOnly: true, 
