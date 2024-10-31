@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const secret = fs.readFileSync("certificate.csr", "utf8");
+// const certificate = fs.readFileSync('certificate.csr');
+const JWT_SECRET= process.env.JWT_SECRET;
 
 const verifyJwt = (req, res, next) => {
   const token = req.session.auth;

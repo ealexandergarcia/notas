@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const secret = fs.readFileSync("certificate.csr", "utf8");
+// const secret = fs.readFileSync("certificate.csr", "utf8");
+const secret= process.env.JWT_SECRET;
 
 class JwtService {
   static generateToken(payload) {
