@@ -4,8 +4,8 @@ const https = require('https');
 const fs = require('fs');
 const cors = require('cors'); // Importar el paquete cors
 const Database = require('./server/helper/db/connect');
-// const privateKey = fs.readFileSync('private.key');
-// const certificate = fs.readFileSync('certificate.crt');
+const privateKey = fs.readFileSync('private.key');
+const certificate = fs.readFileSync('certificate.crt');
 const { jsonParseErrorHandler } = require('./server/middleware/errorHandler'); // Importar el manejador de errores
 const  SessionService  = require('./server/middleware/sessionConfig'); // Importar el manejador de errores
 const verifyJwt = require('./server/middleware/decodedJWT')
@@ -28,10 +28,10 @@ app.use(cors({
 Database.getInstance();
 
 // Cargar el certificado y la clave
-// const options = {
-//     key: privateKey, // Ruta a tu clave privada
-//     cert: certificate // Ruta a tu certificado
-// };
+const options = {
+    key: privateKey, // Ruta a tu clave privada
+    cert: certificate // Ruta a tu certificado
+};
 
 
 // Middleware para parsear JSON
@@ -50,6 +50,6 @@ app.use('/api/notes',verifyJwt, noteRoutes);
 app.use(jsonParseErrorHandler);
 
 // Iniciar el servidor para el back-end en el puerto 5000
-https.createServer( app).listen(PORT_BACKEND, () => {
+https.createServer(options, app).listen(PORT_BACKEND, () => {
     console.log(`Servidor back-end corriendo en https://localhost:${PORT_BACKEND}`);
 });
