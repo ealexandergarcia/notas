@@ -3,6 +3,39 @@
 ## Base URL
 Ruta base: https://localhost:5000/api
 
+## Configuracion del usuario de la db
+db.createRole({
+  role: "adminNotePad",
+  privileges: [
+    {
+      resource: { db: "cineCampus", collection: "" },
+      actions: [
+        "find",
+        "insert",
+        "update",
+        "remove",
+        "createCollection",
+        "createIndex",
+        "dropCollection",
+        "dropIndex",
+        "collStats",
+        "dbStats",
+        "listCollections",
+        "listIndexes"
+      ]
+    }
+  ],
+  roles: [
+    { role: "readWrite", db: "notas" },
+    { role: "dbAdmin", db: "notas" },
+    { role: "userAdmin", db: "notas" }
+  ]
+})
+
+
+se debe crear un usuario en la db notas que tenga el rol  de adminNotePad
+
+
 ## Versiones de API
 Versión Actual: 1.0.0
 
