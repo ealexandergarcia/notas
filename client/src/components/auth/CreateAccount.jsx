@@ -19,7 +19,7 @@ const CreateAccount = () => {
     setError(''); // Reset previous errors
 
     try {
-      const response = await fetch('https://notas-jea3xnvnr-ealexandergarcias-projects.vercel.app/api/users/', {
+      const response = await fetch('https://notas-phi.vercel.app/api/users/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

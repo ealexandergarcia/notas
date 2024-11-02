@@ -1,7 +1,7 @@
 # Documentación de la API
 
 ## Base URL
-Ruta base: https://notas-jea3xnvnr-ealexandergarcias-projects.vercel.app/api
+Ruta base: https://notas-phi.vercel.app/api
 
 ## Versiones de API
 Versión Actual: 1.0.0

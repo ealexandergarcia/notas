@@ -13,7 +13,7 @@ class SessionService {
           secure: true, 
           httpOnly: false, 
           maxAge: 30 * 60 * 1000,
-          sameSite: 'none'
+          sameSite: 'lax'
         },
       })
     );

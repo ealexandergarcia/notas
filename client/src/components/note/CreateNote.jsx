@@ -73,7 +73,7 @@ const CreateNote = () => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://notas-jea3xnvnr-ealexandergarcias-projects.vercel.app/api/notes', {
+      const response = await fetch('https://notas-phi.vercel.app/api/notes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

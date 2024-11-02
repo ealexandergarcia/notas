@@ -24,7 +24,7 @@ export default function NotesScreen() {
     const fetchNotes = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://notas-jea3xnvnr-ealexandergarcias-projects.vercel.app/api/notes', {
+        const response = await fetch('https://notas-phi.vercel.app/api/notes', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default function NotesScreen() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://notas-jea3xnvnr-ealexandergarcias-projects.vercel.app/api/notes/search?query=${encodeURIComponent(term)}`, {
+      const response = await fetch(`https://notas-phi.vercel.app/api/notes/search?query=${encodeURIComponent(term)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export default function NotesScreen() {
   const deleteNote = async (noteId) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`https://notas-jea3xnvnr-ealexandergarcias-projects.vercel.app/api/notes/${noteId}`, {
+      const response = await fetch(`https://notas-phi.vercel.app/api/notes/${noteId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
