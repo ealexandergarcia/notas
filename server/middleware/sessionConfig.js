@@ -11,7 +11,7 @@ class SessionService {
         saveUninitialized: false, 
         cookie: {
           secure: false, 
-          httpOnly: true, 
+          httpOnly: false, 
           maxAge: 30 * 60 * 1000,
           sameSite: 'lax'
         },
