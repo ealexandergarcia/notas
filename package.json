@@ -6,12 +6,12 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "node --env-file .env ./server.js",
-    "dev:back": "node --env-file .env --watch server.js",
-    "dev:front": "vite",
-    "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",
+    "start": "node --env-file .env server.js",
+    "dev": "vite",
+    "app": "concurrently \"npm run dev\" \"npm run start\"",
     "build": "vite build",
-    "serve": "vite preview"
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -23,7 +23,6 @@
     "express-rate-limit": "^7.4.1",
     "express-session": "^1.18.1",
     "express-validator": "^7.2.0",
-    "helmet": "^8.0.0",
     "https": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.453.0",
