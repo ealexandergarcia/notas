@@ -1,5 +1,6 @@
 // server.js
 const express = require('express');
+const cors = require('cors');
 const Database = require('./server/helper/db/connect');
 const { jsonParseErrorHandler } = require('./server/middleware/errorHandler');
 const SessionService = require('./server/middleware/sessionConfig');
