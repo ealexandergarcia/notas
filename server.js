@@ -8,12 +8,13 @@ const noteRoutes = require('./server/router/noteRouters');
 const userRoutes = require('./server/router/userRouters');
 
 const PORT_BACKEND = 5000;
+
+const app = express();
+
 app.use(cors({
     origin: 'https://ealexandergarcia.github.io',
     credentials: true, // Habilita el envío de cookies si es necesario
   }));
-
-const app = express();
 
 // Llama para inicializar la conexión
 Database.getInstance();
