@@ -10,8 +10,8 @@ class SessionService {
         resave: true,
         saveUninitialized: false, 
         cookie: {
-          secure: true, 
-          httpOnly: false, 
+          secure: false, 
+          httpOnly: true, 
           maxAge: 30 * 60 * 1000,
           sameSite: 'lax'
         },

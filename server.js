@@ -37,7 +37,5 @@ app.use(jsonParseErrorHandler);
 
 // Iniciar el servidor para el back-end en el puerto 5000
 app.listen(PORT_BACKEND, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT_BACKEND}`);
 });
-
-console.log("Edwin es gay")
