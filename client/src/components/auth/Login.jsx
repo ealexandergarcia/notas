@@ -42,7 +42,7 @@ const Login = () => {
       if (response.status === 200) {
         const data = await response.json();
         localStorage.setItem('token', data.data.token);
-        navigate('/#/home'); // Redirect to home on successful login
+        navigate('/home'); // Redirect to home on successful login
       } else {
         const data = await response.json();
         setError(data.message || 'Error al iniciar sesión');
