@@ -6,15 +6,9 @@ class SessionService {
   static initializeSession(app) {
     app.use(
       session({
-        secret: secret,
-        resave: true,
-        saveUninitialized: false, 
-        rolling: true,
+        secret: process.env.JWT_SECRET, // tu secret
         cookie: {
-          secure: false, 
-          httpOnly: true, 
-          maxAge: 30 * 60 * 1000,
-          sameSite: 'lax'
+          maxAge: 30 * 60 * 1000 // 30 minutos
         },
       })
     );
