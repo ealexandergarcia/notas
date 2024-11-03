@@ -6,10 +6,11 @@ class SessionService {
   static initializeSession(app) {
     app.use(
       session({
-        secret: process.env.JWT_SECRET, // tu secret
-        cookie: {
-          maxAge: 30 * 60 * 1000 // 30 minutos
-        },
+    secret: process.env.JWT_SECRET, // tu secret
+    cookie: {
+      httpOnly: true, 
+      maxAge: 30 * 60 * 1000 // 30 minutos
+    },
       })
     );
   }
