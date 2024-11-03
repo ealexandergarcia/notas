@@ -1,5 +1,5 @@
 # Documentación de la API
-
+El funcionamiento local se encuentra en la rama main3, en main se encuetnra el despliegue del back y front, el front funciona en su totalidad no obstante se presenta un error al obtener la cookie de session, por otro lado, el backend funciona a la perfeccion, para pruebas se pueden usar aplicaciones como hunderclient o postman
 ## Base URL
 Ruta base: https://notas-phi.vercel.app/api
 
