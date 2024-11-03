@@ -12,10 +12,10 @@ const PORT_BACKEND = 5000;
 
 const app = express();
 
-// app.use(cors({
-//     origin: 'https://ealexandergarcia.github.io',
-//     credentials: true, // Habilita el envío de cookies si es necesario
-//   }));
+app.use(cors({
+    origin: 'https://ealexandergarcia.github.io',
+    credentials: true, // Habilita el envío de cookies si es necesario
+  }));
 
 // Llama para inicializar la conexión
 Database.getInstance();
