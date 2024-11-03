@@ -9,9 +9,10 @@ class SessionService {
         secret: secret,
         resave: true,
         saveUninitialized: false, 
+        rolling: true,
         cookie: {
-          secure: true, 
-          httpOnly: false, 
+          secure: false, 
+          httpOnly: true, 
           maxAge: 30 * 60 * 1000,
           sameSite: 'lax'
         },
